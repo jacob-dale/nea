@@ -26,9 +26,9 @@ class Piece:
     def move_to(self, file, rank):
         self._square = Square(file, rank)
 
-    def is_selected(self):  # determines if a sqare has been selected, if so the piece will be highlighted
+    def is_selected(self):  # determines if a square has been selected, if so the piece will be highlighted
         if shared.selected_square is not None:
-            if self._square._rank == selected_square._rank and self._square._file == selected_square._file:
+            if self._square._rank == shared.selected_square._rank and self._square._file == shared.selected_square._file:
                 return True
             else:
                 return False

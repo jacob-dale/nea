@@ -1,6 +1,6 @@
 import shared
 from graphics import *
-from board import *
+import board
 from player import *
 from pieces import *
 
@@ -27,8 +27,8 @@ def captureWhite():
     for piece in white._pieces:
         rankOk = piece._square._rank == rank
         fileOk = piece._square._file == file
+        captureOwnPiece()
         if rankOk and fileOk:
-            captureOwnPiece()
             white._pieces.pop(i)
             break
         else:
@@ -43,20 +43,21 @@ def captureBlack():
     for piece in black._pieces:
         rankOk = piece._square._rank == rank
         fileOk = piece._square._file == file
+        captureOwnPiece()
         if rankOk and fileOk:
-            captureOwnPiece()
             black._pieces.pop(i)
             break
         else:
             i += 1
 
+
 def captureOwnPiece():
     global mouseClick
     global movingPiece
-    file = movingPiece.file
-    rank = movingPiece.rank
+    file = movingPiece._square.get_file_as_int()
+    rank = movingPiece._square.get_rank()
     i = 0
-    if movingPiece.isBlack:
+    if movingPiece._is_black:
         for piece in black._pieces:
             rankOk = piece._square._rank == rank
             fileOk = piece._square._file == file
@@ -76,6 +77,7 @@ def captureOwnPiece():
                 i += 1
 
 
+
 def moveWhite():
     global selected_square
     global mouseClick
@@ -84,7 +86,7 @@ def moveWhite():
     print(mouseClick)
     file = files[int((mouseClick.x - 100)/50)]
     rank = 8 - int((mouseClick.y - 100)/50)
-    selected_square = Square(file, rank)
+    shared.selected_square = Square(file, rank)
     redraw()
     movingPiece = None
     for piece in white._pieces:
@@ -112,7 +114,7 @@ def moveBlack():
     print(mouseClick)
     file = files[int((mouseClick.x - 100)/50)]
     rank = 8 - int((mouseClick.y - 100)/50)
-    selected_square = Square(file, rank)
+    shared.selected_square = Square(file, rank)
     redraw()
     movingPiece = None
     for piece in black._pieces:

@@ -1,7 +1,7 @@
 import shared
 from graphics import *
 
-class Square:
+class Square():
     _file = "a"
     _rank = 1
 
