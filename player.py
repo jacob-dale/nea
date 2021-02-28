@@ -2,8 +2,10 @@ from shared import *
 from pieces import *
 
 
+# This class encapsulates functions and variables for both the human and AI player.
 class Player:
-    def __init__(self, is_black):  # gives the pieces a parameter to determine there colour
+    def __init__(self, is_black):
+        # Gives the pieces a parameter to determine there colour.
         self._is_black = is_black
         self._pieces = []  # creates arrays to store the pieces
         rank = 2
@@ -11,7 +13,8 @@ class Player:
             rank = 7
         for i in range(8):
             file = shared.files[i]
-            self._pieces.append(Pawn(Square(file, rank), is_black))  # adds the pawns to the piece array for the player
+            # Adds the pawns to the piece array for the player.
+            self._pieces.append(Pawn(Square(file, rank), is_black))
 
         if self._is_black:  # determines the kings starting rank
             rank = 8
@@ -39,9 +42,10 @@ class Player:
         self._pieces.append(Rook(Square(file, rank), is_black))
 
     def draw(self):
-        if self._is_black:
-            print("Draw the black pieces")
-        else:
-            print("Draw the white pieces")
         for piece in self._pieces:
             piece.draw_piece(shared.win)
+
+    def legal_move(self, file, rank):
+        for piece in self._pieces:
+            piece.can_i_move_to(file, rank)
+            
